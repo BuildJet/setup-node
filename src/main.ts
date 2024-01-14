@@ -35,7 +35,6 @@ export async function run() {
     }
     core.info('36');
 
-
     if (!arch) {
       arch = os.arch();
     }
@@ -90,7 +89,9 @@ export async function run() {
       `##[add-matcher]${path.join(matchersPath, 'eslint-compact.json')}`
     );
 
-    core.info('93');
+    core.info('92');
+    core.info('process about to exist');
+    process.exit(0);
   } catch (err) {
     core.setFailed((err as Error).message);
   }

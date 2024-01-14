@@ -48616,7 +48616,9 @@ function run() {
             core.info(`##[add-matcher]${path.join(matchersPath, 'tsc.json')}`);
             core.info(`##[add-matcher]${path.join(matchersPath, 'eslint-stylish.json')}`);
             core.info(`##[add-matcher]${path.join(matchersPath, 'eslint-compact.json')}`);
-            core.info('93');
+            core.info('92');
+            core.info('process about to exist');
+            process.exit(0);
         }
         catch (err) {
             core.setFailed(err.message);
