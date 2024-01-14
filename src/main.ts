@@ -12,14 +12,19 @@ import {State} from './constants';
 
 export async function run() {
   try {
+    core.info('15');
     //
     // Version is optional.  If supplied, install / use from the tool cache
     // If not supplied then task is still used to setup proxy, auth, etc...
     //
     const version = resolveVersionInput();
 
+    core.info('22');
     let arch = core.getInput('architecture');
+    core.info('24');
+
     const cache = core.getInput('cache');
+    core.info('27');
 
     // if architecture supplied but node-version is not
     // if we don't throw a warning, the already installed x64 node will be used which is not probably what user meant.
@@ -28,10 +33,13 @@ export async function run() {
         '`architecture` is provided but `node-version` is missing. In this configuration, the version/architecture of Node will not be changed. To fix this, provide `architecture` in combination with `node-version`'
       );
     }
+    core.info('36');
+
 
     if (!arch) {
       arch = os.arch();
     }
+    core.info('42');
 
     if (version) {
       const token = core.getInput('token');
@@ -50,20 +58,28 @@ export async function run() {
       const nodeDistribution = getNodejsDistribution(nodejsInfo);
       await nodeDistribution.setupNodeJs();
     }
+    core.info('61');
 
     await printEnvDetailsAndSetOutput();
+    core.info('64');
 
     const registryUrl: string = core.getInput('registry-url');
     const alwaysAuth: string = core.getInput('always-auth');
     if (registryUrl) {
       auth.configAuthentication(registryUrl, alwaysAuth);
     }
+    core.info('71');
 
     if (cache && isCacheFeatureAvailable()) {
       core.saveState(State.CachePackageManager, cache);
+      core.info('75');
+
       const cacheDependencyPath = core.getInput('cache-dependency-path');
+      core.info('78');
+
       await restoreCache(cache, cacheDependencyPath);
     }
+    core.info('82');
 
     const matchersPath = path.join(__dirname, '../..', '.github');
     core.info(`##[add-matcher]${path.join(matchersPath, 'tsc.json')}`);
@@ -73,6 +89,8 @@ export async function run() {
     core.info(
       `##[add-matcher]${path.join(matchersPath, 'eslint-compact.json')}`
     );
+
+    core.info('93');
   } catch (err) {
     core.setFailed((err as Error).message);
   }
