@@ -73,6 +73,7 @@ export async function run() {
     core.info(
       `##[add-matcher]${path.join(matchersPath, 'eslint-compact.json')}`
     );
+    process.exit(0);
   } catch (err) {
     core.setFailed((err as Error).message);
   }
